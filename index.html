@@ -78,12 +78,14 @@
         <div id="topPanel">
             <div id="configPanel">
                 <div>Modo de juego:</div>
-                <label>
-                    <input type="radio" name="gameMode" value="normal" checked> Normal
-                </label>
-                <label>
-                    <input type="radio" name="gameMode" value="intercambiado"> Intercambiado
-                </label>
+                <div style="display: none">
+                    <label>
+                        <input type="radio" name="gameMode" value="normal"> Normal
+                    </label>
+                    <label>
+                        <input type="radio" name="gameMode" value="intercambiado" checked> Intercambiado
+                    </label>
+                </div>
                 <label for="transitionTime">Tiempo por color:
                     <input type="number" id="transitionTime" min="1" max="10" step="1" value="3">
                 </label>
@@ -126,6 +128,8 @@
         let intervalId = null;
         let timerInterval;
         let points = 0;
+        let num_answers = 0;
+        let num_ok = 0;
         let currentWord, currentColor;
         let gameStartTime;
         let timePerColor;
@@ -163,10 +167,12 @@
         }
 
         function checkAnswer(selectedWord) {
+            num_answers++;
             if (selectedWord === currentWord) {
                 points++;
-                pointsDisplay.textContent = points;
             }
+            num_ok = num_answers - points;
+            pointsDisplay.textContent = num_ok;
             updateWord();
         }
 
@@ -205,7 +211,7 @@
             clearInterval(colorChangeInterval);
             playPauseBtn.textContent = 'Reproducir';
             intervalId = null;
-            resultDisplay.textContent = `¡FIN! Puntos: ${points}`;
+            resultDisplay.textContent = `¡FIN! Puntos: ${num_ok}`;
         }
 
         function updateTimer() {
