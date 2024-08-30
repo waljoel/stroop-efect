@@ -48,7 +48,6 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 204px;
         }
         .colorOption {
             width: 50px;
@@ -90,7 +89,7 @@
             </div>
             <div id="stats">
                 <div>Tiempo restante: <span id="timer">01:00</span></div>
-                <div>Incorrectas: <span id="points">0</span></div>
+                <div>Puntos: <span id="points">0</span></div>
             </div>
         </div>
         
@@ -205,7 +204,7 @@
             clearInterval(colorChangeInterval);
             playPauseBtn.textContent = 'Reproducir';
             intervalId = null;
-            resultDisplay.textContent = `¡FIN! Te equivocaste ${points} veces :)`;
+            resultDisplay.textContent = `¡FIN! Puntos: ${points}`;
         }
 
         function updateTimer() {
