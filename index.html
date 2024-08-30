@@ -128,8 +128,8 @@
         let intervalId = null;
         let timerInterval;
         let points = 0;
-        let num_answers = 0;
-        let num_ok = 0;
+        /*let num_answers = 0;*/
+        /*let num_ok = 0;*/
         let currentWord, currentColor;
         let gameStartTime;
         let timePerColor;
@@ -167,14 +167,11 @@
         }
 
         function checkAnswer(selectedWord) {
-            num_answers++;
+            /*num_answers++;*/
             if (selectedWord === currentWord) {
                 points++;
+                pointsDisplay.textContent = points;
             }
-            else{
-                num_ok++;
-            }
-            pointsDisplay.textContent = num_ok;
             updateWord();
         }
 
