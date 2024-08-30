@@ -171,7 +171,9 @@
             if (selectedWord === currentWord) {
                 points++;
             }
-            num_ok = num_answers - points;
+            else{
+                num_ok++;
+            }
             pointsDisplay.textContent = num_ok;
             updateWord();
         }
