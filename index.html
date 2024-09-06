@@ -36,7 +36,7 @@
         }
         #gameArea {
             font-size: 48px;
-            margin-bottom: 20px;
+            margin-bottom: 50px; /* Aumentado para más espacio */
             height: 60px;
             display: flex;
             align-items: center;
@@ -48,7 +48,7 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 204px;
+            padding: 20px;
         }
         .colorOption {
             width: 50px;
@@ -67,7 +67,7 @@
             margin-top: 20px;
         }
         #result {
-            font-size: 32px;
+            font-size: 24px;
             text-align: center;
             margin-top: 20px;
         }
@@ -92,7 +92,8 @@
             </div>
             <div id="stats">
                 <div>Tiempo restante: <span id="timer">01:00</span></div>
-                <div>Puntos: <span id="points">0</span></div>
+                <div>Aciertos: <span id="points">0</span></div>
+                <div>Errores: <span id="errors">0</span></div>
             </div>
         </div>
         
@@ -109,6 +110,7 @@
         const transitionTimeInput = document.getElementById('transitionTime');
         const timerDisplay = document.getElementById('timer');
         const pointsDisplay = document.getElementById('points');
+        const errorsDisplay = document.getElementById('errors');
         const resultDisplay = document.getElementById('result');
         const gameModeInputs = document.getElementsByName('gameMode');
 
@@ -128,8 +130,7 @@
         let intervalId = null;
         let timerInterval;
         let points = 0;
-        /*let num_answers = 0;*/
-        /*let num_ok = 0;*/
+        let errors = 0;
         let currentWord, currentColor;
         let gameStartTime;
         let timePerColor;
@@ -142,7 +143,7 @@
                 let option = document.createElement('div');
                 option.className = 'colorOption';
                 option.style.backgroundColor = colorWord.color;
-                option.onclick = () => checkAnswer(colorWord.word);
+                option.onclick = () => checkAnswer(colorWord.color);
                 colorOptions.appendChild(option);
             });
         }
@@ -166,11 +167,13 @@
             colorChangeTime = Date.now() + timePerColor * 1000;
         }
 
-        function checkAnswer(selectedWord) {
-            /*num_answers++;*/
-            if (selectedWord === currentWord) {
+        function checkAnswer(selectedColor) {
+            if (selectedColor === currentColor) {
                 points++;
                 pointsDisplay.textContent = points;
+            } else {
+                errors++;
+                errorsDisplay.textContent = errors;
             }
             updateWord();
         }
@@ -190,7 +193,9 @@
 
         function startGame() {
             points = 0;
+            errors = 0;
             pointsDisplay.textContent = points;
+            errorsDisplay.textContent = errors;
             resultDisplay.textContent = '';
             gameStartTime = Date.now();
             timePerColor = parseFloat(transitionTimeInput.value);
@@ -201,7 +206,7 @@
                 if (Date.now() >= colorChangeTime) {
                     updateWord();
                 }
-            }, 100); // Verifica cada 100 ms
+            }, 100);
         }
 
         function endGame() {
@@ -210,7 +215,7 @@
             clearInterval(colorChangeInterval);
             playPauseBtn.textContent = 'Reproducir';
             intervalId = null;
-            resultDisplay.textContent = `¡FIN! Puntos: ${num_ok}`;
+            resultDisplay.textContent = `¡FIN! Aciertos: ${points} | Errores: ${errors}`;
         }
 
         function updateTimer() {
@@ -249,8 +254,8 @@
             });
         });
 
-        createColorOptions(); // Crear la banda de colores fija
-        updateWord(); // Mostrar la primera palabra al cargar
+        createColorOptions();
+        updateWord();
     </script>
 </body>
 </html>
